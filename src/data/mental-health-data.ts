@@ -1,5 +1,5 @@
-import type { BaseDataPoint, ChartConfig } from "@/data/data-utils";
-import { generateDates, generateTrendedRandom, createBaseDataPoint } from "@/data/data-utils";
+import type { BaseDataPoint, ChartConfig } from "./data-utils";
+import { generateDates, generateTrendedRandom, createBaseDataPoint } from "./data-utils";
 
 interface MentalHealthDataPoint extends BaseDataPoint {
   mentalHealthScore: number;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   Bell,
   LogOut,
@@ -23,6 +23,7 @@ import phIcon from "../../assets/ph-icon2.svg";
 
 export const TopNav = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { theme } = useTheme();
   const [notifications, setNotifications] = React.useState(3);
   
@@ -30,7 +31,6 @@ export const TopNav = () => {
   const userRole = localStorage.getItem("userRole") || "guest";
   const displayName = userRole === "guest" ? "Guest User" : userEmail.split("@")[0];
   const avatarInitials = displayName.split(" ").map(n => n[0]).join("").toUpperCase();
-  const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=0B85B5&color=fff&size=128`;
 
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
@@ -39,10 +39,14 @@ export const TopNav = () => {
     navigate("/login");
   };
 
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
+
   return (
-    <div className="fixed top-0 left-0 right-0 h-16 bg-[#0B85B5] border-b border-[#F7F7F7]/10 px-4 flex items-center justify-between z-50">
-      {/* Left side - Logo and Navigation Links */}
-      <div className="flex items-center space-x-6">
+    <div className="fixed top-0 left-0 right-0 h-16 bg-[#BF0F73] border-b border-[#F7F7F7]/10 px-4 flex items-center justify-between z-50">
+      {/* Left side - Logo */}
+      <div className="flex items-center">
         <Link
           to="/login"
           className="hover:opacity-90"
@@ -53,34 +57,43 @@ export const TopNav = () => {
             className="h-8 w-8"
           />
         </Link>
+      </div>
+
+      {/* Right side - Navigation Links, Notifications, and User Account */}
+      <div className="flex items-center space-x-6">
         <Link
           to="/longevity"
-          className="text-sm font-medium text-white hover:text-white/90"
+          className={`relative text-sm font-medium transition-all duration-300 transform hover:scale-105 after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full ${
+            isActive('/longevity') ? 'text-white' : 'text-gray-300 hover:text-white'
+          }`}
         >
           Longevity
         </Link>
         <Link
           to="/health-wallet"
-          className="text-sm font-medium text-white hover:text-white/90"
+          className={`relative text-sm font-medium transition-all duration-300 transform hover:scale-105 after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full ${
+            isActive('/health-wallet') ? 'text-white' : 'text-gray-300 hover:text-white'
+          }`}
         >
           Health Wallet
         </Link>
         <Link
-          to="/wearables"
-          className="text-sm font-medium text-white hover:text-white/90"
+          to="/devices"
+          className={`relative text-sm font-medium transition-all duration-300 transform hover:scale-105 after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full ${
+            isActive('/devices') ? 'text-white' : 'text-gray-300 hover:text-white'
+          }`}
         >
-          Wearables
+          Devices
         </Link>
         <Link
           to="/rx-cabinet"
-          className="text-sm font-medium text-white hover:text-white/90"
+          className={`relative text-sm font-medium transition-all duration-300 transform hover:scale-105 after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full ${
+            isActive('/rx-cabinet') ? 'text-white' : 'text-gray-300 hover:text-white'
+          }`}
         >
           Rx Cabinet
         </Link>
-      </div>
 
-      {/* Right side - User Account and Notifications */}
-      <div className="flex items-center space-x-4">
         {/* Notifications */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -126,19 +139,25 @@ export const TopNav = () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className="hover:bg-white/10">
-              <Avatar className="h-8 w-8">
-                <AvatarImage src={avatarUrl} />
-                <AvatarFallback className="bg-[#1A1D23] text-white">{avatarInitials}</AvatarFallback>
-              </Avatar>
+              <div className="AvatarRoot h-8 w-8 rounded-full overflow-hidden">
+                <img 
+                  src="https://unsplash.com/photos/N8lRH2uxih4/download?force=true"
+                  alt="Profile"
+                  className="h-full w-full object-cover"
+                />
+              </div>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-80 bg-[#1A1D23] border-[#F7F7F7]/10">
             <div className="px-4 py-3 border-b border-[#F7F7F7]/10">
               <div className="flex items-center space-x-3">
-                <Avatar className="h-16 w-16">
-                  <AvatarImage src={avatarUrl} />
-                  <AvatarFallback className="bg-[#1A1D23] text-white">{avatarInitials}</AvatarFallback>
-                </Avatar>
+                <div className="AvatarRoot h-16 w-16 rounded-full overflow-hidden">
+                  <img 
+                    src="https://unsplash.com/photos/N8lRH2uxih4/download?force=true"
+                    alt="Profile"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
                 <div>
                   <p className="text-sm font-medium text-white">{displayName}</p>
                   <p className="text-xs text-white/70">{userEmail}</p>

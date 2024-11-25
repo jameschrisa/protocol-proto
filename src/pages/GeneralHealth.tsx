@@ -1,6 +1,6 @@
 import React from "react";
 import { Card } from "../components/ui/card";
-import { BarChart } from "../components/health/bar-chart";
+import { AreaChart } from "../components/health/area-chart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
 import { Scale, Ruler, Activity, Thermometer } from "lucide-react";
 import { BMICategories } from "../types/health-types";
@@ -146,30 +146,38 @@ export const GeneralHealth = () => {
         </Card>
       </div>
 
-      {/* Trend Charts in Tabs */}
+      {/* Weight and BMI Trend Charts */}
       <Card className="p-6">
         <Tabs defaultValue="weight" className="space-y-4">
           <TabsList>
             <TabsTrigger value="weight">Weight</TabsTrigger>
             <TabsTrigger value="bmi">BMI</TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="weight">
+            <AreaChart {...weightChartConfig} />
+          </TabsContent>
+
+          <TabsContent value="bmi">
+            <AreaChart {...bmiChartConfig} />
+          </TabsContent>
+        </Tabs>
+      </Card>
+
+      {/* Blood Pressure and Glucose Trend Charts */}
+      <Card className="p-6">
+        <Tabs defaultValue="bloodPressure" className="space-y-4">
+          <TabsList>
             <TabsTrigger value="bloodPressure">Blood Pressure</TabsTrigger>
             <TabsTrigger value="bloodGlucose">Blood Glucose</TabsTrigger>
           </TabsList>
           
-          <TabsContent value="weight">
-            <BarChart {...weightChartConfig} />
-          </TabsContent>
-
-          <TabsContent value="bmi">
-            <BarChart {...bmiChartConfig} />
-          </TabsContent>
-
           <TabsContent value="bloodPressure">
-            <BarChart {...bloodPressureChartConfig} />
+            <AreaChart {...bloodPressureChartConfig} />
           </TabsContent>
 
           <TabsContent value="bloodGlucose">
-            <BarChart {...bloodGlucoseChartConfig} />
+            <AreaChart {...bloodGlucoseChartConfig} />
           </TabsContent>
         </Tabs>
       </Card>

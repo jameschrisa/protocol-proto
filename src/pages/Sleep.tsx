@@ -1,6 +1,6 @@
 import React from "react";
 import { Card } from "../components/ui/card";
-import { BarChart } from "../components/health/bar-chart";
+import { AreaChart } from "../components/health/area-chart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
 import { Moon, Timer, Star } from "lucide-react";
 import { cn } from "../lib/utils";
@@ -126,15 +126,15 @@ export const Sleep = () => {
           </TabsList>
           
           <TabsContent value="duration">
-            <BarChart {...sleepDurationConfig} />
+            <AreaChart {...sleepDurationConfig} />
           </TabsContent>
 
           <TabsContent value="recovery">
-            <BarChart {...recoveryTimeConfig} />
+            <AreaChart {...recoveryTimeConfig} />
           </TabsContent>
 
           <TabsContent value="quality">
-            <BarChart {...sleepQualityConfig} />
+            <AreaChart {...sleepQualityConfig} />
           </TabsContent>
         </Tabs>
       </Card>

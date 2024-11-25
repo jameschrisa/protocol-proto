@@ -107,7 +107,7 @@ export const Login = () => {
           <img
             src={logo}
             alt="Protocol Logo"
-            className={`h-12 mb-6 ${theme === 'dark' ? 'invert' : ''}`}
+            className={`h-24 mb-6 ${theme === 'dark' ? 'invert' : ''}`}
           />
           <p className="text-gray-500 dark:text-gray-400">Sign in to your account</p>
         </div>

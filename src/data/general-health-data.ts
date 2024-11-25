@@ -1,5 +1,5 @@
-import type { BaseDataPoint } from "@/data/data-utils";
-import { generateDates, generateTrendedRandom, createBaseDataPoint } from "@/data/data-utils";
+import type { BaseDataPoint } from "./data-utils";
+import { generateDates, generateTrendedRandom, createBaseDataPoint } from "./data-utils";
 
 interface GeneralHealthDataPoint extends BaseDataPoint {
   weight: number;

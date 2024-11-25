@@ -1,8 +1,9 @@
 import React from "react";
-import { cn } from "@/lib/utils";
-import { navigation } from "@/config/navigation";
+import { cn } from "../../lib/utils";
+import { navigation } from "../../config/navigation";
 import { Link, useLocation } from "react-router-dom";
-import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
+import { PanelsTopLeft, ChevronRight, LayoutGrid, Bot } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./card";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
   isVisible?: boolean;
@@ -32,17 +33,23 @@ export function Sidebar({ className, isVisible = true, onToggle }: SidebarProps)
         className="absolute -right-3 top-4 z-10 rounded-full border border-gray-200 bg-white p-1.5 dark:border-gray-800 dark:bg-gray-950"
         onClick={handleToggle}
       >
-        {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+        <PanelsTopLeft className={cn(
+          "h-4 w-4 transition-transform duration-300",
+          isCollapsed ? "rotate-180" : "rotate-0"
+        )} />
       </button>
 
       <div className="space-y-4 py-4">
         <div className="px-3 py-2">
-          <h2 className={cn(
-            "text-lg font-semibold tracking-tight transition-all",
+          <div className={cn(
+            "flex items-center gap-2 transition-all",
             isCollapsed ? "opacity-0" : "opacity-100 px-2 mb-2"
           )}>
-            Health Dashboard
-          </h2>
+            <LayoutGrid className="h-5 w-5 text-[hsl(var(--brand))]" />
+            <h2 className="text-lg font-semibold tracking-tight text-[hsl(var(--brand))]">
+              Health Spaces
+            </h2>
+          </div>
           <div className="space-y-1">
             {navigation.map((item) => {
               const Icon = item.icon;
@@ -53,9 +60,9 @@ export function Sidebar({ className, isVisible = true, onToggle }: SidebarProps)
                   to={item.href}
                   className={cn(
                     "flex items-center gap-3 rounded-lg px-2 py-2 text-sm font-medium transition-all",
-                    "hover:bg-gray-100 dark:hover:bg-gray-800",
+                    "hover:bg-[hsl(var(--brand))] hover:text-[hsl(var(--brand-foreground))] hover:bg-opacity-90",
                     isActive 
-                      ? "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-50" 
+                      ? "bg-[hsl(var(--brand))] text-[hsl(var(--brand-foreground))]" 
                       : "text-gray-500 dark:text-gray-400"
                   )}
                 >
@@ -67,6 +74,29 @@ export function Sidebar({ className, isVisible = true, onToggle }: SidebarProps)
                 </Link>
               );
             })}
+          </div>
+
+          {/* Health Pilot Card */}
+          <div className={cn(
+            "mt-4 transition-all",
+            isCollapsed ? "opacity-0" : "opacity-100"
+          )}>
+            <Card className="border border-gray-200 dark:border-gray-800">
+              <CardHeader className="p-4 pb-2">
+                <div className="flex items-center gap-2">
+                  <Bot className="h-4 w-4 text-[hsl(var(--brand))]" />
+                  <CardTitle className="text-sm">Health Pilot (Beta)</CardTitle>
+                </div>
+                <CardDescription className="text-xs">
+                  AI agent trained on your private and personal health data
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="p-4 pt-2">
+                <button className="w-full px-3 py-1.5 text-xs font-medium text-white bg-[hsl(var(--brand))] hover:bg-opacity-90 rounded-md transition-colors">
+                  Learn More
+                </button>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
@@ -81,13 +111,9 @@ export function Sidebar({ className, isVisible = true, onToggle }: SidebarProps)
           href="https://protocolhealth.ai"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-between w-full px-3 py-2 text-sm font-medium text-white bg-[#0B85B5] hover:bg-[#0B85B5]/90 rounded-lg transition-colors group"
+          className="flex items-center justify-center w-full px-3 py-2 text-xs font-medium text-white bg-[hsl(var(--brand))] hover:bg-[hsl(var(--brand))] hover:bg-opacity-90 rounded-lg transition-colors"
         >
-          <span className="flex items-center gap-2">
-            <ExternalLink className="h-4 w-4 text-white" />
-            Visit Protocol Health
-          </span>
-          <ChevronRight className="h-4 w-4 text-white" />
+          Visit Protocol Health
         </a>
         <p className="mt-3 text-xs text-center text-gray-500 dark:text-gray-400">Version 1.0.0</p>
       </div>

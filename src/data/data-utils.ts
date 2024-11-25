@@ -22,7 +22,7 @@ export const generateDates = (weeks: number): string[] => {
   const dates: string[] = [];
   const today = new Date();
   
-  // Start from 24 weeks ago
+  // Start from N weeks ago
   const startDate = new Date(today);
   startDate.setDate(today.getDate() - ((weeks - 1) * 7));
   

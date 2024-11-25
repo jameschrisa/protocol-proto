@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Bar, BarChart as RechartsBarChart, CartesianGrid, XAxis, ResponsiveContainer, YAxis, Tooltip } from "recharts"
+import { Area, AreaChart as RechartsAreaChart, CartesianGrid, XAxis, ResponsiveContainer, YAxis, Tooltip } from "recharts"
 import {
   Card,
   CardContent,
@@ -20,7 +20,7 @@ interface Series {
   color: string
 }
 
-interface BarChartProps {
+interface AreaChartProps {
   data: any[]
   series: Series[]
   title: string
@@ -52,7 +52,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
-export function BarChart({ data, series, title, description, yAxisLabel }: BarChartProps) {
+export function AreaChart({ data, series, title, description, yAxisLabel }: AreaChartProps) {
   const [activeChart, setActiveChart] = 
     React.useState<string>(series[0]?.key || '')
 
@@ -89,7 +89,7 @@ export function BarChart({ data, series, title, description, yAxisLabel }: BarCh
   }, [data, activeChart])
 
   return (
-    <Card className="h-[400px]">
+    <Card className="h-[500px]">
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
           <CardTitle>{title}</CardTitle>
@@ -114,9 +114,9 @@ export function BarChart({ data, series, title, description, yAxisLabel }: BarCh
         </div>
       </CardHeader>
       <CardContent className="p-6 pt-4">
-        <div className="h-[280px] w-full">
+        <div className="h-[380px] w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <RechartsBarChart
+            <RechartsAreaChart
               data={data}
               margin={{
                 top: 20,
@@ -167,14 +167,15 @@ export function BarChart({ data, series, title, description, yAxisLabel }: BarCh
                 tickFormatter={(value) => value.toLocaleString()}
               />
               <Tooltip content={<CustomTooltip />} />
-              <Bar 
+              <Area
                 name={config[activeChart]?.label}
-                dataKey={activeChart} 
-                fill={config[activeChart]?.color || 'currentColor'} 
-                radius={[4, 4, 0, 0]}
-                maxBarSize={16}
+                type="monotone"
+                dataKey={activeChart}
+                stroke={config[activeChart]?.color || 'currentColor'}
+                fill={config[activeChart]?.color || 'currentColor'}
+                fillOpacity={0.1}
               />
-            </RechartsBarChart>
+            </RechartsAreaChart>
           </ResponsiveContainer>
         </div>
       </CardContent>
